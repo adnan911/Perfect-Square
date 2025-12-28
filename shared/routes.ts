@@ -13,6 +13,9 @@ export const errorSchemas = {
   }),
 };
 
+export type InsertScore = z.infer<typeof insertScoreSchema>;
+export type Score = typeof scores.$inferSelect;
+
 export const api = {
   scores: {
     list: {
