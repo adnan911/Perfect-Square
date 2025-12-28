@@ -1,0 +1,110 @@
+You are a senior geometry-focused game engineer.
+
+The current square evaluation logic is inaccurate and overly naive.
+Refactor and replace the square-detection system with a robust, geometry-based algorithm.
+
+STRICT REQUIREMENTS:
+
+INPUT NORMALIZATION
+
+Capture the full drawing path as ordered (x, y) points.
+
+Normalize the drawing by:
+
+Translating points so the centroid is at (0,0)
+
+Scaling uniformly so the longest side equals 1
+
+Remove jitter by smoothing or downsampling points.
+
+CORNER DETECTION
+
+Detect exactly 4 corner candidates using direction change analysis:
+
+Compute vectors between successive points
+
+Detect corners where angle change exceeds a threshold
+
+If fewer or more than 4 corners are detected, apply clustering to resolve to 4 dominant corners.
+
+SIDE VALIDATION
+
+Compute distances between consecutive corners.
+
+All four sides must be approximately equal.
+
+Use relative tolerance (percentage error), not absolute pixel values.
+
+ANGLE VALIDATION
+
+Compute angles at each corner using vector dot products.
+
+Ideal angle = 90 degrees.
+
+Penalize deviation smoothly (no hard cutoffs).
+
+CLOSURE CHECK
+
+Ensure the distance between the first and last point is below a small normalized threshold.
+
+Apply penalty if closure is imperfect.
+
+STRAIGHTNESS CHECK
+
+For each side segment, calculate average deviation of points from the ideal straight line.
+
+Penalize curvature proportionally.
+
+FINAL SCORE
+
+Produce a final score from 0–100 using weighted metrics:
+
+Angle accuracy
+
+Side length equality
+
+Line straightness
+
+Closure accuracy
+
+Avoid binary pass/fail logic.
+
+VISUAL DEBUGGING (MANDATORY)
+
+Overlay:
+
+Detected corners
+
+Ideal square
+
+User drawing
+
+Use different colors for each layer.
+
+CODE QUALITY
+
+No magic numbers: define thresholds as constants.
+
+Modularize logic into:
+
+normalizePath()
+
+detectCorners()
+
+evaluateSides()
+
+evaluateAngles()
+
+evaluateStraightness()
+
+calculateFinalScore()
+
+Comment all math clearly.
+
+GOAL:
+
+The game must reward geometric precision, not approximate shapes.
+A rectangle, diamond, or curved shape must score noticeably lower than a true square.
+
+Do NOT add new UI or features.
+Only fix and professionalize the square evaluation logic.

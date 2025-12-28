@@ -68,22 +68,59 @@ export default function Game() {
       ctx.lineWidth = 3;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.shadowBlur = 10;
+      ctx.shadowBlur = result ? 0 : 10;
       ctx.shadowColor = ctx.strokeStyle;
       
       ctx.beginPath();
       ctx.moveTo(points[0].x, points[0].y);
       for (let i = 1; i < points.length; i++) {
-        // Smooth curve
-        // const xc = (points[i].x + points[i + 1].x) / 2;
-        // const yc = (points[i].y + points[i + 1].y) / 2;
-        // ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
         ctx.lineTo(points[i].x, points[i].y);
       }
       ctx.stroke();
+
+      // Visual Debugging Overlay
+      if (result && result.debug) {
+        // Calculate drawing bounds to map normalized debug points back to screen
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        points.forEach(p => {
+          minX = Math.min(minX, p.x); maxX = Math.max(maxX, p.x);
+          minY = Math.min(minY, p.y); maxY = Math.max(maxY, p.y);
+        });
+        const width = maxX - minX;
+        const height = maxY - minY;
+        const centerX = (minX + maxX) / 2;
+        const centerY = (minY + maxY) / 2;
+        const scale = Math.max(width, height) / 1.0; // Our normalization was roughly 1.0 size
+
+        const mapPoint = (p: Point) => ({
+          x: centerX + p.x * scale,
+          y: centerY + p.y * scale
+        });
+
+        // 1. Draw Ideal Square (Cyan)
+        ctx.strokeStyle = "rgba(34, 211, 238, 0.4)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        const ideal = result.debug.idealSquare.map(mapPoint);
+        ctx.moveTo(ideal[0].x, ideal[0].y);
+        for (let i = 1; i < 4; i++) ctx.lineTo(ideal[i].x, ideal[i].y);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 2. Draw Detected Corners (Red)
+        ctx.fillStyle = "#ef4444";
+        result.debug.corners.forEach(p => {
+          const pt = mapPoint(p);
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 6, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
       
-      // Close loop visually if done
-      if (result) {
+      // Close loop visually if done (Legacy simple closure line)
+      if (result && !result.debug) {
         ctx.beginPath();
         ctx.moveTo(points[points.length-1].x, points[points.length-1].y);
         ctx.lineTo(points[0].x, points[0].y);
