@@ -1,0 +1,234 @@
+GAME TITLE
+Draw the Perfect Square
+
+PRODUCT OVERVIEW
+
+Draw the Perfect Square is a casual, skill-based web game where the player attempts to draw a perfect square using mouse or touch input. After the drawing is completed, the system analyzes the shape and provides a score based on geometric accuracy.
+
+Core idea: Test human precision against mathematical perfection.
+
+TARGET PLATFORM
+
+Platform: Web (Desktop + Mobile)
+Development Environment: Replit
+
+Recommended Tech Stack:
+
+HTML5 Canvas
+
+Vanilla JavaScript
+
+CSS
+
+LocalStorage (optional)
+
+No backend required for MVP.
+
+CORE GAME FLOW
+
+User opens the game
+
+User clicks “Start”
+
+Blank canvas appears
+
+User draws a square in one continuous stroke
+
+User releases mouse or touch
+
+System analyzes the drawing
+
+Score and feedback are shown
+
+User can retry or continue
+
+GAME RULES
+
+Only one continuous stroke is allowed
+
+Drawing must form a closed shape
+
+Drawing starts on pointer down
+
+Drawing ends on pointer up
+
+No undo during a draw
+
+Canvas resets after each attempt
+
+SCORING CRITERIA
+
+Each drawing is evaluated using the following metrics:
+
+Side Equality
+All four sides should be similar in length
+
+Angle Accuracy
+Each corner should be close to 90 degrees
+
+Line Straightness
+Each side should have minimal curvature
+
+Closure Accuracy
+Start and end points must be very close
+
+Symmetry
+Overall balance of the shape
+
+SCORE CALCULATION
+
+Final score ranges from 0 to 100
+
+Suggested weighting:
+
+Angle Accuracy: 30%
+Side Equality: 30%
+Straightness: 25%
+Closure Accuracy: 15%
+
+Final Score = weighted average of all metrics
+
+FEEDBACK SYSTEM
+
+Score Feedback Mapping:
+
+95–100 → “Perfect Square”
+85–94 → “Almost Perfect”
+70–84 → “Good Attempt”
+Below 70 → “Needs Practice”
+
+GAME MODES
+
+Phase 1: Classic Mode
+
+One draw
+
+Instant scoring
+
+Phase 2: Challenge Mode
+
+Time limit
+
+No retries
+
+Higher penalties
+
+Phase 3: Level Mode
+
+Level 1: Large canvas
+
+Higher levels: Smaller canvas
+
+Advanced levels: Rotated canvas
+
+UI REQUIREMENTS
+
+Main Screen:
+
+Game title
+
+Start button
+
+Best score display
+
+Drawing Screen:
+
+Full screen canvas
+
+Optional faint grid
+
+Optional timer
+
+Result Screen:
+
+Score percentage
+
+Text feedback
+
+Visual overlay of ideal square vs user drawing
+
+Retry button
+
+TECHNICAL REQUIREMENTS
+
+Canvas Handling:
+
+Capture x, y coordinates during drawing
+
+Store drawing path as an array of points
+
+Shape Analysis:
+
+Detect corner points from direction changes
+
+Calculate distances between corners
+
+Calculate angles using vector math
+
+Normalize drawing size before scoring
+
+Performance:
+
+Smooth drawing on mobile and desktop
+
+Real-time rendering under 16ms per frame
+
+DATA STORAGE
+
+Use LocalStorage to store:
+
+Best score
+
+Total attempts
+
+No authentication required.
+
+NON-FUNCTIONAL REQUIREMENTS
+
+Mobile responsive
+
+Touch and mouse input support
+
+Fast load time (under 2 seconds)
+
+Works offline after first load
+
+SUCCESS METRICS
+
+Average score improvement
+
+Retry rate
+
+Session length
+
+Player return rate
+
+FUTURE ENHANCEMENTS
+
+Draw other shapes (circle, triangle)
+
+Daily challenge mode
+
+Replay best drawing
+
+Global leaderboard
+
+Achievement badges
+
+REPLIT BUILD NOTES
+
+Use single index.html for MVP
+
+Separate logic files if needed:
+
+input handling
+
+shape analysis
+
+scoring
+
+Focus on visual feedback first
+
+Refine math accuracy after core gameplay works
+
+END OF PRD
