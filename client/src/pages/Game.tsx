@@ -339,7 +339,7 @@ export default function Game() {
         <div style="
           position: absolute;
           width: 100%;
-          height: 80%;
+          height: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -438,18 +438,18 @@ export default function Game() {
             </div>
           </div>
 
-          <!-- Perfect Square Branding - Lower Right -->
+          <!-- Perfect Square Branding - Lower Center -->
           <div style="
             position: absolute;
             bottom: 12px;
-            right: 14px;
-            text-align: right;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
             color: rgba(255, 255, 255, 0.5);
             font-size: 9px;
             line-height: 1.2;
           ">
-            <div>Perfect</div>
-            <div>Square</div>
+            <div>Perfect Square</div>
           </div>
         </div>
       `;
