@@ -682,8 +682,73 @@
     gap: 4px;
   }
 
+
   .cyber-card-content {
     padding: 12px;
+  }
+}
+
+/* Witcher Card Theme */
+.witcher-card {
+  --wc-bg-dark: #121214;
+  --wc-gold: #cba874;
+  --wc-silver: #a8a8a8;
+
+  width: 280px;
+  height: 400px;
+  background-color: var(--wc-bg-dark);
+  border: 2px solid #4a4a4a;
+  font-family: 'Cinzel', serif;
+  color: var(--wc-silver);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  background-image: radial-gradient(circle at 50% 30%, #2a2a2e, #121214 70%);
+}
+
+.witcher-corner {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border: 2px solid var(--wc-gold);
+  opacity: 0.8;
+}
+
+.wc-tl {
+  top: 8px;
+  left: 8px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.wc-tr {
+  top: 8px;
+  right: 8px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.wc-bl {
+  bottom: 8px;
+  left: 8px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.wc-br {
+  bottom: 8px;
+  right: 8px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* Mobile Enhancements */
+@media (max-width: 640px) {
+  .witcher-card {
+    transform: scale(0.9);
   }
 }
 

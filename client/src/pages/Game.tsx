@@ -486,7 +486,7 @@ export default function Game() {
       />
 
       {/* UI Overlay */}
-      <div className="absolute inset-0 z-20 pointer-events-none p-3 sm:p-6 flex flex-col justify-between safe-area-inset">
+      <div className="absolute inset-0 z-20 pointer-events-none pt-12 px-4 sm:p-6 flex flex-col justify-between safe-area-inset">
         {/* Header */}
         <div className="flex justify-between items-start pointer-events-auto gap-2">
           <Button variant="ghost" size="sm" onClick={() => setLocation("/")} className="min-h-[44px]">
@@ -589,74 +589,71 @@ export default function Game() {
           </div>
         )}
 
-        {/* Results Panel - Cyber Card */}
+        {/* Results Panel - Witcher Card Modal */}
         <AnimatePresence>
           {result && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 pointer-events-auto"
             >
-              <div className="cyber-container noselect">
-                <div className="cyber-card">
-                  <div className="cyber-card-content">
-                    <div className="cyber-card-glare"></div>
-                    <div className="cyber-lines">
-                      <span></span><span></span><span></span><span></span>
-                    </div>
+              <div className="witcher-card relative">
+                {/* Corners */}
+                <div className="witcher-corner wc-tl"></div>
+                <div className="witcher-corner wc-tr"></div>
+                <div className="witcher-corner wc-bl"></div>
+                <div className="witcher-corner wc-br"></div>
 
-                    {/* Feedback */}
-                    <p className="cyber-feedback">"{result.feedback}"</p>
+                {/* Title */}
+                <div className="text-[#cba874] text-xs tracking-[0.2em] border-b border-[#4a4a4a] pb-2 w-full text-center mb-6 font-serif">
+                  PERFECT SQUARE
+                </div>
 
-                    {/* Score Section */}
-                    <div className="cyber-score-value">{result.total}</div>
+                {/* Score */}
+                <div className="relative w-24 h-24 flex items-center justify-center mb-2">
+                  <div className="absolute inset-0 border-2 border-[#cba874] rounded-full opacity-50"></div>
+                  <div className="absolute inset-2 border border-[#4a4a4a] rounded-full"></div>
+                  <span className="text-5xl font-bold text-white z-10 drop-shadow-[0_0_15px_#cba874]">
+                    {result.total}
+                  </span>
+                </div>
 
-                    {/* Metrics */}
-                    <div className="cyber-metrics">
-                      <div className="cyber-metric">
-                        <div className="cyber-metric-label">Closure</div>
-                        <div className="cyber-metric-value">{result.metrics.closure}</div>
-                      </div>
-                      <div className="cyber-metric">
-                        <div className="cyber-metric-label">Sides</div>
-                        <div className="cyber-metric-value">{result.metrics.sides}</div>
-                      </div>
-                      <div className="cyber-metric">
-                        <div className="cyber-metric-label">Angles</div>
-                        <div className="cyber-metric-value">{result.metrics.angles}</div>
-                      </div>
-                      <div className="cyber-metric">
-                        <div className="cyber-metric-label">Straight</div>
-                        <div className="cyber-metric-value">{result.metrics.straightness}</div>
-                      </div>
-                    </div>
+                {/* Feedback */}
+                <div className="text-[#a8a8a8] text-xs italic border border-[#4a4a4a] px-3 py-1 rounded bg-black/30 mb-auto text-center">
+                  "{result.feedback}"
+                </div>
 
-                    {/* Buttons */}
-                    <div className="cyber-buttons">
-                      <button className="cyber-button cyber-button-primary" onClick={resetGame}>
-                        <RotateCcw className="w-4 h-4" /> Again
-                      </button>
-                      <button className="cyber-button cyber-button-secondary" onClick={downloadReportCard}>
-                        <Download className="w-4 h-4" /> Save
-                      </button>
-                    </div>
-
-                    {/* Decorative Elements */}
-                    <div className="cyber-glowing-elements">
-                      <div className="cyber-glow-1"></div>
-                      <div className="cyber-glow-2"></div>
-                      <div className="cyber-glow-3"></div>
-                    </div>
-                    <div className="cyber-card-particles">
-                      <span></span><span></span><span></span>
-                      <span></span><span></span><span></span>
-                    </div>
-                    <div className="cyber-corner-elements">
-                      <span></span><span></span><span></span><span></span>
-                    </div>
-                    <div className="cyber-scan-line"></div>
+                {/* Stats */}
+                <div className="w-full text-[10px] text-gray-500 mt-4 space-y-1">
+                  <div className="flex justify-between border-b border-[#333] pb-1">
+                    <span>CLOSURE</span> <span className="text-emerald-500 font-bold">{result.metrics.closure}</span>
                   </div>
+                  <div className="flex justify-between border-b border-[#333] pb-1">
+                    <span>SIDES</span> <span className="text-emerald-500 font-bold">{result.metrics.sides}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-[#333] pb-1">
+                    <span>ANGLES</span> <span className="text-emerald-500 font-bold">{result.metrics.angles}</span>
+                  </div>
+                  <div className="flex justify-between pt-1">
+                    <span>STRAIGHT</span> <span className="text-emerald-500 font-bold">{result.metrics.straightness}</span>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 w-full mt-4">
+                  <button
+                    onClick={resetGame}
+                    className="flex-1 py-2 bg-[#10b981] text-black text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 hover:brightness-110 active:scale-95 transition-all"
+                  >
+                    <RotateCcw className="w-3 h-3" /> AGAIN
+                  </button>
+                  <button
+                    onClick={downloadReportCard}
+                    className="flex-1 py-2 border border-[#10b981] text-[#10b981] text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 hover:bg-[#10b981]/10 active:scale-95 transition-all"
+                  >
+                    <Download className="w-3 h-3" /> SAVE
+                  </button>
                 </div>
               </div>
             </motion.div>

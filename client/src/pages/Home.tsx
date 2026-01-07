@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      
+
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 border border-white/5 rounded-3xl -rotate-12" />
@@ -34,7 +34,7 @@ export default function Home() {
           className="mb-8"
         >
           <div className="inline-block border-2 border-primary w-24 h-24 mb-6 rotate-3 shadow-[0_0_30px_rgba(16,185,129,0.2)]" />
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground mb-4 leading-tight">
+          <h1 className="text-4xl md:text-7xl font-display font-bold text-foreground mb-4 leading-tight">
             Draw the<br />
             <span className="text-primary text-glow">Perfect Square</span>
           </h1>
@@ -44,16 +44,16 @@ export default function Home() {
         </motion.div>
 
         <div className="flex flex-col items-center gap-6">
-          <Button 
-            onClick={() => setLocation("/game")} 
-            size="lg" 
-            className="w-full md:w-auto min-w-[200px] text-lg h-16 shadow-2xl"
+          <Button
+            onClick={() => setLocation("/game")}
+            size="lg"
+            className="w-full md:w-auto px-10 text-lg h-16 shadow-2xl"
           >
             <Play className="w-5 h-5 mr-3 fill-current" /> Start Drawing
           </Button>
 
           {bestScore > 0 && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
@@ -67,7 +67,7 @@ export default function Home() {
           )}
         </div>
       </motion.div>
-      
+
       <div className="absolute bottom-8 text-center">
         <p className="text-xs text-muted-foreground/30 font-mono">
           v1.0 • PRECISION ENGINE ACTIVE
