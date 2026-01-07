@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Square - Download Card Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            font-family: 'Cinzel', serif;
+            padding: 2em;
+        }
+
+        .preview-container {
+            text-align: center;
+        }
+
+        .preview-label {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-family: system-ui, sans-serif;
+        }
+
+        /* Witcher Card Styles - Adapted for Perfect Square */
+        .witcher-card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2em;
+            font-family: 'Cinzel', serif;
+        }
+
+        .witcher-card {
+            --wc-bg-dark: #121214;
+            --wc-bg-light: #1e1e21;
+            --wc-silver: #a8a8a8;
+            --wc-silver-dark: #4a4a4a;
+            --wc-gold: #cba874;
+            --wc-eye-glow: #ff2a2a;
+            --wc-magic-aura: rgba(205, 179, 128, 0.15);
+            --wc-score-green: #4ade80;
+
+            position: relative;
+            width: 280px;
+            height: 400px;
+            background-color: var(--wc-bg-dark);
+            border: 3px solid var(--wc-silver-dark);
+            font-family: 'Cinzel', serif;
+            color: var(--wc-silver);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5em;
+            overflow: hidden;
+
+            background-image: radial-gradient(circle at 50% 30%,
+                    #2a2a2e,
+                    var(--wc-bg-dark) 70%),
+                repeating-linear-gradient(45deg,
+                    rgba(0, 0, 0, 0.1) 0,
+                    rgba(0, 0, 0, 0.1) 2px,
+                    transparent 2px,
+                    transparent 4px);
+
+            box-shadow:
+                0 1em 2em rgba(0, 0, 0, 0.8),
+                inset 0 0 2em rgba(0, 0, 0, 0.9);
+        }
+
+        .witcher-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 50% 40%,
+                    var(--wc-magic-aura) 0%,
+                    transparent 60%);
+            opacity: 1;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .witcher-card-corner {
+            position: absolute;
+            width: 2em;
+            height: 2em;
+            border: 2px solid var(--wc-gold);
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .witcher-card-corner.top-left {
+            top: 0.5em;
+            left: 0.5em;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .witcher-card-corner.top-right {
+            top: 0.5em;
+            right: 0.5em;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .witcher-card-corner.bottom-left {
+            bottom: 0.5em;
+            left: 0.5em;
+            border-right: none;
+            border-top: none;
+        }
+
+        .witcher-card-corner.bottom-right {
+            bottom: 0.5em;
+            right: 0.5em;
+            border-left: none;
+            border-top: none;
+        }
+
+        .witcher-card-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.8em;
+        }
+
+        .witcher-card-title {
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.85em;
+            color: var(--wc-gold);
+            border-bottom: 1px solid var(--wc-silver-dark);
+            padding-bottom: 0.5em;
+            width: 100%;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Score Circle */
+        .witcher-card-score {
+            width: 120px;
+            height: 120px;
+            margin: 0.5em 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            filter: drop-shadow(0 0.5em 1em rgba(0, 0, 0, 0.8));
+        }
+
+        .witcher-card-score::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--wc-gold);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .witcher-card-score::after {
+            content: "";
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border: 1px solid var(--wc-silver-dark);
+            border-radius: 50%;
+        }
+
+        .score-value {
+            font-size: 56px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow:
+                0 0 20px var(--wc-gold),
+                0 4px 8px rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        /* Feedback Text */
+        .witcher-card-feedback {
+            font-size: 0.75em;
+            color: var(--wc-silver);
+            font-style: italic;
+            text-align: center;
+            padding: 0.3em 1em;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            border: 1px solid var(--wc-silver-dark);
+        }
+
+        /* Stats Area */
+        .witcher-card-details {
+            margin-top: auto;
+            width: 100%;
+            font-size: 0.7em;
+            color: #888;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .witcher-card-stat {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #333;
+            padding: 0.4em 0;
+        }
+
+        .witcher-card-stat:last-child {
+            border-bottom: none;
+        }
+
+        .witcher-card-stat span:first-child {
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+        }
+
+        .witcher-card-stat span:last-child {
+            color: var(--wc-score-green);
+            font-weight: 600;
+        }
+
+        /* Branding */
+        .witcher-card-brand {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            letter-spacing: 0.2em;
+            color: rgba(168, 168, 168, 0.4);
+            text-transform: uppercase;
+            z-index: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="preview-container">
+        <div class="preview-label">📋 Preview with Demo Data - Perfect Square Download Card</div>
+
+        <div class="witcher-card-container">
+            <div class="witcher-card">
+                <div class="witcher-card-corner top-left"></div>
+                <div class="witcher-card-corner top-right"></div>
+                <div class="witcher-card-corner bottom-left"></div>
+                <div class="witcher-card-corner bottom-right"></div>
+
+                <div class="witcher-card-content">
+                    <div class="witcher-card-title">Perfect Square</div>
+
+                    <div class="witcher-card-score">
+                        <span class="score-value">87</span>
+                    </div>
+
+                    <div class="witcher-card-feedback">"Almost Perfect!"</div>
+
+                    <div class="witcher-card-details">
+                        <div class="witcher-card-stat">
+                            <span>Closure</span>
+                            <span>92</span>
+                        </div>
+                        <div class="witcher-card-stat">
+                            <span>Sides</span>
+                            <span>85</span>
+                        </div>
+                        <div class="witcher-card-stat">
+                            <span>Angles</span>
+                            <span>88</span>
+                        </div>
+                        <div class="witcher-card-stat">
+                            <span>Straight</span>
+                            <span>83</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="witcher-card-brand">Perfect Square</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

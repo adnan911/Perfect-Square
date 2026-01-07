@@ -275,7 +275,7 @@ export default function Game() {
     if (!resultCardRef.current || !result) return;
 
     try {
-      // Create the main container with gradient border effect
+      // Create the Witcher-themed card container
       const tempDiv = document.createElement('div');
       tempDiv.style.cssText = `
         position: fixed;
@@ -283,181 +283,173 @@ export default function Game() {
         top: 0;
         width: 280px;
         height: 400px;
-        border-radius: 20px;
-        overflow: hidden;
         z-index: 9999;
-        font-family: system-ui, -apple-system, sans-serif;
+        font-family: 'Cinzel', serif;
       `;
 
       tempDiv.innerHTML = `
-        <!-- Gradient Border Layer -->
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
+        </style>
+        <!-- Witcher Card -->
         <div style="
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          padding: 3px;
-          background: linear-gradient(135deg, #a855f7 0%, #f97316 50%, #a855f7 100%);
-          border-radius: 20px;
-          box-sizing: border-box;
-        ">
-          <div style="
-            width: 100%;
-            height: 100%;
-            border-radius: 17px;
-            border-top-right-radius: 100px;
-            border-bottom-right-radius: 50px;
-            background: #1a1a2e;
-          "></div>
-        </div>
-
-        <!-- Gradient Orb with Score in Center -->
-        <div style="
-          position: absolute;
-          width: 100%;
-          height: 80%;
-          display: flex;
-          align-items: flex-start;
-          justify-content: center;
-          padding-top: 80px;
-          border-radius: 20px;
-          overflow: hidden;
-        ">
-          <div style="
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #a855f7 0%, #fb923c 50%, #f472b6 100%);
-            filter: blur(1px);
-            opacity: 0.9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          "></div>
-        </div>
-
-        <!-- Score in Center of Orb -->
-        <div style="
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          pointer-events: none;
-        ">
-          <div style="
-            font-size: 100px;
-            font-weight: 400;
-            font-family: 'Luckiest Guy', cursive;
-            color: #fffefeff;
-            line-height: 1;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(168, 85, 247, 0.4);
-          ">${result.total}</div>
-        </div>
-
-        <!-- Content Overlay -->
-        <div style="
-          position: absolute;
-          inset: 0;
-          padding: 16px;
+          position: relative;
+          width: 280px;
+          height: 400px;
+          background-color: #121214;
+          border: 3px solid #4a4a4a;
+          font-family: 'Cinzel', Georgia, serif;
+          color: #a8a8a8;
           display: flex;
           flex-direction: column;
-          border-radius: 20px;
+          align-items: center;
+          justify-content: space-between;
+          padding: 24px;
+          box-sizing: border-box;
+          overflow: hidden;
+          background-image: radial-gradient(circle at 50% 30%, #2a2a2e, #121214 70%),
+            repeating-linear-gradient(45deg, rgba(0,0,0,0.1) 0, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 4px);
+          box-shadow: 0 16px 32px rgba(0,0,0,0.8), inset 0 0 32px rgba(0,0,0,0.9);
         ">
-          <!-- Top Section - Feedback -->
+          <!-- Magic Aura Overlay -->
           <div style="
-            padding: 12px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 50% 40%, rgba(205,179,128,0.15) 0%, transparent 60%);
+            pointer-events: none;
+          "></div>
+
+          <!-- Corner Decorations -->
+          <div style="position: absolute; top: 8px; left: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-right: none; border-bottom: none; opacity: 0.8;"></div>
+          <div style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-left: none; border-bottom: none; opacity: 0.8;"></div>
+          <div style="position: absolute; bottom: 8px; left: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-right: none; border-top: none; opacity: 0.8;"></div>
+          <div style="position: absolute; bottom: 8px; right: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-left: none; border-top: none; opacity: 0.8;"></div>
+
+          <!-- Card Content -->
+          <div style="
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
           ">
+            <!-- Title -->
             <div style="
-              font-size: 18px;
-              color: rgba(255, 255, 255, 0.7);
-              font-style: normal;
-              font-family: 'Gochi Hand', cursive;
-              line-height: 1.2;
+              text-transform: uppercase;
+              letter-spacing: 0.15em;
+              font-size: 14px;
+              color: #cba874;
+              border-bottom: 1px solid #4a4a4a;
+              padding-bottom: 8px;
+              width: 100%;
               text-align: center;
-            ">"${result.feedback}"</div>
-          </div>
-          
-          <!-- Bottom Section - Metrics -->
-          <div style="
-            padding: 10px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-          ">
-            <!-- Metrics Grid -->
+              text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            ">Perfect Square Report</div>
+
+            <!-- Score Circle -->
             <div style="
-              display: grid;
-              grid-template-columns: 1fr 1fr;
-              gap: 6px;
+              width: 120px;
+              height: 120px;
+              margin: 8px 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: relative;
+              filter: drop-shadow(0 8px 16px rgba(0,0,0,0.8));
             ">
+              <!-- Outer Ring -->
               <div style="
-                background: rgba(255, 255, 255, 0.06);
-                border-radius: 8px;
-                padding: 6px 6px 4px;
-                text-align: center;
-              ">
-                <div style="font-size: 7px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0; line-height: 1;">Closure</div>
-                <div style="font-size: 20px; font-weight: 600; color: #4ade80; line-height: 1;">${result.metrics.closure}</div>
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border: 2px solid #cba874;
+                border-radius: 50%;
+                opacity: 0.5;
+              "></div>
+              <!-- Inner Ring -->
+              <div style="
+                position: absolute;
+                width: 90%;
+                height: 90%;
+                border: 1px solid #4a4a4a;
+                border-radius: 50%;
+              "></div>
+              <!-- Score Value -->
+              <span style="
+                font-size: 56px;
+                font-weight: 700;
+                color: #fff;
+                text-shadow: 0 0 20px #cba874, 0 4px 8px rgba(0,0,0,0.8);
+                z-index: 1;
+              ">${result.total}</span>
+            </div>
+
+            <!-- Feedback -->
+            <div style="
+              font-size: 12px;
+              color: #a8a8a8;
+              font-style: italic;
+              text-align: center;
+              padding: 5px 16px;
+              background: rgba(0,0,0,0.3);
+              border-radius: 4px;
+              border: 1px solid #4a4a4a;
+            ">"${result.feedback}"</div>
+
+            <!-- Stats -->
+            <div style="
+              margin-top: auto;
+              width: 100%;
+              font-size: 11px;
+              color: #888;
+              text-align: center;
+              line-height: 1.6;
+            ">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 6px 0;">
+                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Closure</span>
+                <span style="color: #267744ff; font-weight: 600;">${result.metrics.closure}</span>
               </div>
-              <div style="
-                background: rgba(255, 255, 255, 0.06);
-                border-radius: 8px;
-                padding: 6px 6px 4px;
-                text-align: center;
-              ">
-                <div style="font-size: 7px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0; line-height: 1;">Sides</div>
-                <div style="font-size: 20px; font-weight: 600; color: #4ade80; line-height: 1;">${result.metrics.sides}</div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 6px 0;">
+                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Sides</span>
+                <span style="color: #267744ff; font-weight: 600;">${result.metrics.sides}</span>
               </div>
-              <div style="
-                background: rgba(255, 255, 255, 0.06);
-                border-radius: 8px;
-                padding: 6px 6px 4px;
-                text-align: center;
-              ">
-                <div style="font-size: 7px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0; line-height: 1;">Angles</div>
-                <div style="font-size: 20px; font-weight: 600; color: #4ade80; line-height: 1;">${result.metrics.angles}</div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 6px 0;">
+                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Angles</span>
+                <span style="color: #267744ff; font-weight: 600;">${result.metrics.angles}</span>
               </div>
-              <div style="
-                background: rgba(255, 255, 255, 0.06);
-                border-radius: 8px;
-                padding: 6px 6px 4px;
-                text-align: center;
-              ">
-                <div style="font-size: 7px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0; line-height: 1;">Straight</div>
-                <div style="font-size: 20px; font-weight: 600; color: #4ade80; line-height: 1;">${result.metrics.straightness}</div>
+              <div style="display: flex; justify-content: space-between; padding: 6px 0;">
+                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Straight</span>
+                <span style="color: #267744ff; font-weight: 600;">${result.metrics.straightness}</span>
               </div>
             </div>
           </div>
 
-          <!-- Perfect Square Branding - Lower Center -->
+          <!-- Branding -->
           <div style="
             position: absolute;
-            bottom: 12px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 9px;
-            line-height: 1.2;
-          ">
-            <div>Perfect Square</div>
-          </div>
+            font-size: 8px;
+            letter-spacing: 0.2em;
+            color: rgba(168,168,168,0.4);
+            text-transform: uppercase;
+            z-index: 3;
+          ">Perfect Square</div>
         </div>
       `;
 
       document.body.appendChild(tempDiv);
 
-      // Wait for styles to apply
-      await new Promise(resolve => setTimeout(resolve, 150));
+      // Wait for styles and fonts to apply
+      await new Promise(resolve => setTimeout(resolve, 300));
 
       const canvas = await html2canvas(tempDiv, {
         backgroundColor: null,
@@ -614,12 +606,11 @@ export default function Game() {
                       <span></span><span></span><span></span><span></span>
                     </div>
 
-                    {/* Score Section */}
-                    <div className="cyber-score-title">Total Score</div>
-                    <div className="cyber-score-value">{result.total}</div>
-
                     {/* Feedback */}
                     <p className="cyber-feedback">"{result.feedback}"</p>
+
+                    {/* Score Section */}
+                    <div className="cyber-score-value">{result.total}</div>
 
                     {/* Metrics */}
                     <div className="cyber-metrics">
