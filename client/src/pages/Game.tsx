@@ -486,11 +486,11 @@ export default function Game() {
       />
 
       {/* UI Overlay */}
-      <div className="absolute inset-0 z-20 pointer-events-none pt-16 px-6 sm:pt-6 sm:px-6 flex flex-col justify-between safe-area-inset">
+      <div className="absolute inset-0 z-20 pointer-events-none pt-20 px-8 sm:pt-6 sm:px-6 flex flex-col justify-between safe-area-inset">
         {/* Header */}
         <div className="flex justify-between items-start pointer-events-auto gap-2">
           <Button variant="ghost" onClick={() => setLocation("/")} className="w-14 h-14 !p-0 bg-black/40 border border-white/10 rounded-full hover:bg-black/60 backdrop-blur-sm">
-            <Home className="w-8 h-8 text-emerald-500" />
+            <Home className="w-10 h-10 text-emerald-500" />
             <span className="hidden sm:inline">Home</span>
           </Button>
 
