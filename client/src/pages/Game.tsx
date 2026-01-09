@@ -289,7 +289,7 @@ export default function Game() {
 
       tempDiv.innerHTML = `
         <style>
-          @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Luckiest+Guy&display=swap');
         </style>
         <!-- Witcher Card -->
         <div style="
@@ -386,6 +386,8 @@ export default function Game() {
                 font-size: 56px;
                 font-weight: 700;
                 color: #fff;
+                font-family: 'Luckiest Guy', cursive;
+                letter-spacing: 2px;
                 text-shadow: 0 0 20px #cba874, 0 4px 8px rgba(0,0,0,0.8);
                 z-index: 1;
               ">${result.total}</span>
@@ -412,21 +414,21 @@ export default function Game() {
               text-align: center;
               line-height: 1.6;
             ">
-              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 6px 0;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 4px 0;">
                 <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Closure</span>
-                <span style="color: #267744ff; font-weight: 600;">${result.metrics.closure}</span>
+                <span style="color: #4ade80; font-weight: 600;">${result.metrics.closure}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 6px 0;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 4px 0;">
                 <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Sides</span>
-                <span style="color: #267744ff; font-weight: 600;">${result.metrics.sides}</span>
+                <span style="color: #4ade80; font-weight: 600;">${result.metrics.sides}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 6px 0;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 4px 0;">
                 <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Angles</span>
-                <span style="color: #267744ff; font-weight: 600;">${result.metrics.angles}</span>
+                <span style="color: #4ade80; font-weight: 600;">${result.metrics.angles}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; padding: 6px 0;">
+              <div style="display: flex; justify-content: space-between; padding: 4px 0;">
                 <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Straight</span>
-                <span style="color: #267744ff; font-weight: 600;">${result.metrics.straightness}</span>
+                <span style="color: #4ade80; font-weight: 600;">${result.metrics.straightness}</span>
               </div>
             </div>
           </div>
