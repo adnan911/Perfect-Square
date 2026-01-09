@@ -387,7 +387,7 @@ export default function Game() {
                 font-weight: 700;
                 color: #fff;
                 font-family: 'Luckiest Guy', cursive;
-                letter-spacing: 2px;
+                margin-top: 5px;
                 text-shadow: 0 0 20px #cba874, 0 4px 8px rgba(0,0,0,0.8);
                 z-index: 1;
               ">${result.total}</span>
