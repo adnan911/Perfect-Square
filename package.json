@@ -11,7 +11,7 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
-    "@coinbase/onchainkit": "^0.33.0",
+    "@coinbase/onchainkit": "^0.38.19",
     "@hookform/resolvers": "^3.10.0",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@radix-ui/react-accordion": "^1.2.4",
@@ -43,7 +43,7 @@
     "@radix-ui/react-tooltip": "^1.2.0",
     "@tanstack/react-query": "^5.60.5",
     "@types/canvas-confetti": "^1.9.0",
-    "@wagmi/core": "^2.13.5",
+    "@wagmi/core": "^2.14.0",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -76,7 +76,7 @@
     "tw-animate-css": "^1.2.5",
     "vaul": "^1.1.2",
     "viem": "^2.21.9",
-    "wagmi": "^2.12.16",
+    "wagmi": "^2.14.0",
     "wouter": "^3.3.5",
     "ws": "^8.18.0",
     "zod": "^3.24.2",
