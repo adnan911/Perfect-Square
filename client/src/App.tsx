@@ -11,7 +11,6 @@ import { OnchainKitProvider } from "@coinbase/onchainkit";
 import { base } from "wagmi/chains";
 import { wagmiConfig } from "./lib/wagmi";
 import "@coinbase/onchainkit/styles.css";
-import { WalletBar } from "@/components/WalletBar";
 
 function Router() {
   return (
@@ -32,7 +31,6 @@ function App() {
           chain={base}
         >
           <TooltipProvider>
-            <WalletBar />
             <Router />
             <Toaster />
           </TooltipProvider>

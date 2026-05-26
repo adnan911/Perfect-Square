@@ -11,6 +11,7 @@ import html2canvas from "html2canvas";
 import { MemphisReportCard } from "@/components/MemphisReportCard";
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { CONTRACT_ADDRESS, ABI } from "@/lib/contracts";
+import { WalletBar } from "@/components/WalletBar";
 
 export default function Game() {
   const [_, setLocation] = useLocation();
@@ -352,6 +353,9 @@ export default function Game() {
 
           <div className="text-right pt-5">
             <p className="font-display text-lg sm:text-xl text-primary">Perfect Square</p>
+            <div className="mt-2 flex justify-end">
+              <WalletBar compact />
+            </div>
           </div>
         </div>
 
