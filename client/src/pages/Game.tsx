@@ -9,6 +9,8 @@ import confetti from "canvas-confetti";
 import { RotateCcw, Home, Share2, Download } from "lucide-react";
 import html2canvas from "html2canvas";
 import { MemphisReportCard } from "@/components/MemphisReportCard";
+import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { CONTRACT_ADDRESS, ABI } from "@/lib/contracts";
 
 export default function Game() {
   const [_, setLocation] = useLocation();
@@ -24,6 +26,33 @@ export default function Game() {
   const resultCardRef = useRef<HTMLDivElement>(null);
 
   const createScore = useCreateScore();
+  
+  const { address } = useAccount();
+  const { writeContract, data: hash, isPending } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
+
+  const handleMint = async () => {
+    if (!address) {
+      alert("Please connect your wallet first!");
+      return;
+    }
+    if (!result) return;
+    
+    const tokenURI = "ipfs://QmVvEED1uX9N3aZk5QhQ9bY11D3T8fCjPqXm45Wc4N423e"; 
+    
+    writeContract({
+      address: CONTRACT_ADDRESS,
+      abi: ABI,
+      functionName: "mint",
+      args: [address, tokenURI],
+    });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      alert("NFT Minted Successfully! View on Base Scan.");
+    }
+  }, [isSuccess]);
 
   // Draw the grid (called once on mount/resize)
   const drawGrid = useCallback((ctx: CanvasRenderingContext2D, width: number, height: number) => {
@@ -370,7 +399,7 @@ export default function Game() {
                 onAgain={resetGame}
                 onSave={downloadReportCard}
                 onClose={resetGame}
-                onMint={() => alert("Mint feature coming soon!")}
+                onMint={isPending || isConfirming ? undefined : handleMint}
               />
             </motion.div>
           )}
