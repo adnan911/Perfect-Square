@@ -1,0 +1,271 @@
+import React from "react";
+import { type ScoreResult } from "@/lib/game-logic";
+
+export function MemphisReportCard({ result, onAgain, onSave, onClose, onMint }: { result: ScoreResult, onAgain?: () => void, onSave?: () => void, onClose?: () => void, onMint?: () => void }) {
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Boogaloo&family=Fredoka+One&display=swap');
+        .mem-card {
+          font-family: 'Fredoka One', 'Boogaloo', cursive, sans-serif;
+          background: #fff9f0;
+          border-radius: 20px;
+          width: 300px;
+          margin: 0 auto;
+          padding: 0;
+          position: relative;
+          overflow: hidden;
+          border: 4px solid #111;
+          box-shadow: 8px 8px 0 #111;
+        }
+        .mem-bg-pattern {
+          position: absolute; inset: 0; pointer-events: none; z-index: 0;
+          width: 100%; height: 100%;
+        }
+        .mem-content { position: relative; z-index: 1; }
+
+        .mem-header {
+          background: #f5e642;
+          border-bottom: 4px solid #111;
+          padding: 14px 16px 10px;
+          text-align: center;
+        }
+        .mem-title {
+          font-family: 'Fredoka One', cursive;
+          font-size: 13px;
+          letter-spacing: 3px;
+          color: #111;
+          text-transform: uppercase;
+          margin: 0 0 2px;
+        }
+
+        .mem-score-ring {
+          width: 96px; height: 96px;
+          border-radius: 50%;
+          border: 5px solid #111;
+          background: #ff4eda;
+          display: flex; align-items: center; justify-content: center;
+          margin: 14px auto 10px;
+          position: relative;
+          box-shadow: 4px 4px 0 #111;
+        }
+        .mem-score-num {
+          font-family: 'Fredoka One', cursive;
+          font-size: 48px;
+          color: #fff;
+          line-height: 1;
+          text-shadow: 2px 2px 0 #111;
+        }
+
+        .mem-badge {
+          display: inline-block;
+          background: #00d4ff;
+          color: #111;
+          font-size: 13px;
+          font-family: 'Fredoka One', cursive;
+          border: 3px solid #111;
+          border-radius: 6px;
+          padding: 4px 14px;
+          margin-bottom: 14px;
+          box-shadow: 3px 3px 0 #111;
+          transform: rotate(-1.5deg);
+        }
+
+        .mem-stats { padding: 14px 18px 4px; }
+        .mem-row {
+          display: flex; align-items: center; justify-content: space-between;
+          border-bottom: 2.5px dashed #bbb;
+          padding: 10px 0 8px;
+          gap: 8px;
+        }
+        .mem-row:last-child { border-bottom: none; }
+        .mem-stat-label {
+          font-family: 'Fredoka One', cursive;
+          font-size: 15px;
+          color: #333;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+        .mem-stat-val {
+          font-family: 'Fredoka One', cursive;
+          font-size: 22px;
+          min-width: 48px;
+          text-align: right;
+        }
+        .mem-stat-bar {
+          flex: 1; height: 10px; border-radius: 5px; border: 2px solid #111;
+          background: #eee; overflow: hidden; margin: 0 8px;
+        }
+        .mem-bar-fill { height: 100%; border-radius: 3px; }
+
+        .dot-grid { fill: #111; opacity: 0.07; }
+
+        .mem-close-btn {
+          position: absolute;
+          top: 12px;
+          right: 16px;
+          background: #fff;
+          border: 3px solid #111;
+          border-radius: 50%;
+          width: 28px;
+          height: 28px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'Fredoka One', cursive;
+          font-size: 16px;
+          color: #111;
+          cursor: pointer;
+          box-shadow: 2px 2px 0 #111;
+          transition: transform 0.1s, box-shadow 0.1s;
+          padding-bottom: 2px;
+          z-index: 10;
+        }
+        .mem-close-btn:active {
+          transform: translate(2px, 2px);
+          box-shadow: 0 0 0 #111;
+        }
+
+        .mem-btns {
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+          padding: 16px 18px;
+          flex-wrap: wrap;
+        }
+        .mem-btn {
+          font-family: 'Fredoka One', cursive;
+          font-size: 14px;
+          color: #111;
+          background: #fff;
+          border: 3px solid #111;
+          border-radius: 8px;
+          padding: 8px 16px;
+          cursor: pointer;
+          box-shadow: 3px 3px 0 #111;
+          transition: transform 0.1s, box-shadow 0.1s;
+          flex: 1;
+        }
+        .mem-btn:active {
+          transform: translate(3px, 3px);
+          box-shadow: 0 0 0 #111;
+        }
+        .mem-btn-again { background: #3df5a0; }
+        .mem-btn-save { background: #00d4ff; }
+        .mem-btn-mint { background: #ff4eda; }
+      `}</style>
+
+      <div className="mem-card" id="memphis-report-card">
+        {/* SVG background patterns */}
+        <svg className="mem-bg-pattern" viewBox="0 0 300 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
+          {/* Terrazzo dots */}
+          <circle cx="22" cy="38" r="5" fill="#ff4eda" opacity="0.55"/>
+          <circle cx="270" cy="60" r="7" fill="#00d4ff" opacity="0.5"/>
+          <circle cx="280" cy="180" r="4" fill="#f5e642" opacity="0.7"/>
+          <circle cx="15" cy="290" r="6" fill="#3df5a0" opacity="0.55"/>
+          <circle cx="285" cy="390" r="5" fill="#ff4eda" opacity="0.5"/>
+          <circle cx="30" cy="440" r="8" fill="#f5642a" opacity="0.45"/>
+          <circle cx="265" cy="520" r="4" fill="#00d4ff" opacity="0.55"/>
+          <circle cx="45" cy="560" r="5" fill="#f5e642" opacity="0.6"/>
+
+          {/* Squiggles */}
+          <path d="M10 130 Q25 115 40 130 Q55 145 70 130 Q85 115 100 130" fill="none" stroke="#ff4eda" strokeWidth="3.5" strokeLinecap="round" opacity="0.7"/>
+          <path d="M200 430 Q215 415 230 430 Q245 445 260 430 Q275 415 292 430" fill="none" stroke="#00d4ff" strokeWidth="3.5" strokeLinecap="round" opacity="0.65"/>
+          <path d="M5 490 Q22 474 39 490 Q56 506 73 490" fill="none" stroke="#3df5a0" strokeWidth="3" strokeLinecap="round" opacity="0.7"/>
+
+          {/* Lightning bolts */}
+          <polygon points="253,100 245,120 252,120 244,142 258,118 250,118" fill="#f5e642" stroke="#111" strokeWidth="1.5" opacity="0.8"/>
+          <polygon points="48,350 40,370 47,370 39,392 53,368 45,368" fill="#ff4eda" stroke="#111" strokeWidth="1.5" opacity="0.7"/>
+
+          {/* Triangles */}
+          <polygon points="258,300 272,325 244,325" fill="none" stroke="#f5642a" strokeWidth="3" opacity="0.6"/>
+          <polygon points="18,200 32,225 4,225" fill="none" stroke="#00d4ff" strokeWidth="3" opacity="0.55"/>
+
+          {/* Plus signs */}
+          <line x1="275" y1="240" x2="275" y2="260" stroke="#3df5a0" strokeWidth="3.5" strokeLinecap="round" opacity="0.7"/>
+          <line x1="265" y1="250" x2="285" y2="250" stroke="#3df5a0" strokeWidth="3.5" strokeLinecap="round" opacity="0.7"/>
+          <line x1="22" y1="158" x2="22" y2="174" stroke="#f5642a" strokeWidth="3.5" strokeLinecap="round" opacity="0.65"/>
+          <line x1="14" y1="166" x2="30" y2="166" stroke="#f5642a" strokeWidth="3.5" strokeLinecap="round" opacity="0.65"/>
+
+          {/* Dots grid */}
+          <g className="dot-grid">
+            <circle cx="60" cy="320" r="2.5"/><circle cx="80" cy="320" r="2.5"/><circle cx="100" cy="320" r="2.5"/>
+            <circle cx="60" cy="340" r="2.5"/><circle cx="80" cy="340" r="2.5"/><circle cx="100" cy="340" r="2.5"/>
+            <circle cx="60" cy="360" r="2.5"/><circle cx="80" cy="360" r="2.5"/><circle cx="100" cy="360" r="2.5"/>
+          </g>
+
+          {/* Checkerboard patch */}
+          <rect x="255" y="460" width="12" height="12" fill="#f5642a" opacity="0.6"/>
+          <rect x="267" y="460" width="12" height="12" fill="#f5e642" opacity="0.6"/>
+          <rect x="255" y="472" width="12" height="12" fill="#f5e642" opacity="0.6"/>
+          <rect x="267" y="472" width="12" height="12" fill="#f5642a" opacity="0.6"/>
+
+          {/* Confetti rects */}
+          <rect x="248" y="138" width="14" height="6" rx="2" fill="#ff4eda" opacity="0.65" transform="rotate(-20,255,141)"/>
+          <rect x="30" y="70" width="14" height="6" rx="2" fill="#00d4ff" opacity="0.6" transform="rotate(15,37,73)"/>
+          <rect x="8" y="500" width="14" height="6" rx="2" fill="#f5e642" opacity="0.65" transform="rotate(-10,15,503)"/>
+          <rect x="262" y="340" width="16" height="6" rx="2" fill="#3df5a0" opacity="0.6" transform="rotate(25,270,343)"/>
+        </svg>
+
+        <div className="mem-content">
+          <div className="mem-header">
+            {onClose && (
+              <button className="mem-close-btn" onClick={onClose}>×</button>
+            )}
+            <div className="mem-title">✦ Perfect Square ✦</div>
+          </div>
+
+          <div style={{ textAlign: 'center', padding: '6px 0 0' }}>
+            <div className="mem-score-ring">
+              <span className="mem-score-num">{result.total}</span>
+            </div>
+            <div className="mem-badge">"{result.feedback}"</div>
+          </div>
+
+          <div className="mem-stats">
+            <div className="mem-row">
+              <span className="mem-stat-label">Closure</span>
+              <div className="mem-stat-bar"><div className="mem-bar-fill" style={{ width: `${result.metrics.closure}%`, background: '#3df5a0' }}></div></div>
+              <span className="mem-stat-val" style={{ color: '#1cb870' }}>{result.metrics.closure}</span>
+            </div>
+            <div className="mem-row">
+              <span className="mem-stat-label">Sides</span>
+              <div className="mem-stat-bar"><div className="mem-bar-fill" style={{ width: `${result.metrics.sides}%`, background: '#ff4eda' }}></div></div>
+              <span className="mem-stat-val" style={{ color: '#999' }}>{result.metrics.sides}</span>
+            </div>
+            <div className="mem-row">
+              <span className="mem-stat-label">Angles</span>
+              <div className="mem-stat-bar"><div className="mem-bar-fill" style={{ width: `${result.metrics.angles}%`, background: '#00d4ff' }}></div></div>
+              <span className="mem-stat-val" style={{ color: '#00a5cc' }}>{result.metrics.angles}</span>
+            </div>
+            <div className="mem-row">
+              <span className="mem-stat-label">Straight</span>
+              <div className="mem-stat-bar"><div className="mem-bar-fill" style={{ width: `${result.metrics.straightness}%`, background: '#f5642a' }}></div></div>
+              <span className="mem-stat-val" style={{ color: '#999' }}>{result.metrics.straightness}</span>
+            </div>
+          </div>
+
+          {(onAgain || onSave || onMint) && (
+            <div className="mem-btns">
+              {onAgain && (
+                <button className="mem-btn mem-btn-again" onClick={onAgain}>
+                  AGAIN
+                </button>
+              )}
+              {onSave && (
+                <button className="mem-btn mem-btn-save" onClick={onSave}>
+                  SAVE
+                </button>
+              )}
+              {onMint && (
+                <button className="mem-btn mem-btn-mint" onClick={onMint}>
+                  MINT
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}

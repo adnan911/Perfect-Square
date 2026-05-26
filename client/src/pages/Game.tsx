@@ -8,6 +8,7 @@ import { useCreateScore } from "@/hooks/use-scores";
 import confetti from "canvas-confetti";
 import { RotateCcw, Home, Share2, Download } from "lucide-react";
 import html2canvas from "html2canvas";
+import { MemphisReportCard } from "@/components/MemphisReportCard";
 
 export default function Game() {
   const [_, setLocation] = useLocation();
@@ -275,191 +276,15 @@ export default function Game() {
     if (!resultCardRef.current || !result) return;
 
     try {
-      // Create the Witcher-themed card container
-      const tempDiv = document.createElement('div');
-      tempDiv.style.cssText = `
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 280px;
-        height: 400px;
-        z-index: 9999;
-        font-family: 'Cinzel', serif;
-      `;
-
-      tempDiv.innerHTML = `
-        <style>
-          @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Luckiest+Guy&display=swap');
-        </style>
-        <!-- Witcher Card -->
-        <div style="
-          position: relative;
-          width: 280px;
-          height: 400px;
-          background-color: #121214;
-          border: 3px solid #4a4a4a;
-          font-family: 'Cinzel', Georgia, serif;
-          color: #a8a8a8;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: space-between;
-          padding: 24px;
-          box-sizing: border-box;
-          overflow: hidden;
-          background-image: radial-gradient(circle at 50% 30%, #2a2a2e, #121214 70%),
-            repeating-linear-gradient(45deg, rgba(0,0,0,0.1) 0, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 4px);
-          box-shadow: 0 16px 32px rgba(0,0,0,0.8), inset 0 0 32px rgba(0,0,0,0.9);
-        ">
-          <!-- Magic Aura Overlay -->
-          <div style="
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at 50% 40%, rgba(205,179,128,0.15) 0%, transparent 60%);
-            pointer-events: none;
-          "></div>
-
-          <!-- Corner Decorations -->
-          <div style="position: absolute; top: 8px; left: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-right: none; border-bottom: none; opacity: 0.8;"></div>
-          <div style="position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-left: none; border-bottom: none; opacity: 0.8;"></div>
-          <div style="position: absolute; bottom: 8px; left: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-right: none; border-top: none; opacity: 0.8;"></div>
-          <div style="position: absolute; bottom: 8px; right: 8px; width: 32px; height: 32px; border: 2px solid #cba874; border-left: none; border-top: none; opacity: 0.8;"></div>
-
-          <!-- Card Content -->
-          <div style="
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 12px;
-          ">
-            <!-- Title -->
-            <div style="
-              text-transform: uppercase;
-              letter-spacing: 0.15em;
-              font-size: 14px;
-              color: #cba874;
-              border-bottom: 1px solid #4a4a4a;
-              padding-bottom: 8px;
-              width: 100%;
-              text-align: center;
-              text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            ">Perfect Square Report</div>
-
-            <!-- Score Circle -->
-            <div style="
-              width: 120px;
-              height: 120px;
-              margin: 8px 0;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              position: relative;
-              filter: drop-shadow(0 8px 16px rgba(0,0,0,0.8));
-            ">
-              <!-- Outer Ring -->
-              <div style="
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                border: 2px solid #cba874;
-                border-radius: 50%;
-                opacity: 0.5;
-              "></div>
-              <!-- Inner Ring -->
-              <div style="
-                position: absolute;
-                width: 90%;
-                height: 90%;
-                border: 1px solid #4a4a4a;
-                border-radius: 50%;
-              "></div>
-              <!-- Score Value -->
-              <span style="
-                font-size: 56px;
-                font-weight: 700;
-                color: #fff;
-                font-family: 'Luckiest Guy', cursive;
-                line-height: 1;
-                text-shadow: 0 0 20px #cba874, 0 4px 8px rgba(0,0,0,0.8);
-                z-index: 1;
-              ">${result.total}</span>
-            </div>
-
-            <!-- Feedback -->
-            <div style="
-              font-size: 12px;
-              color: #a8a8a8;
-              font-style: italic;
-              text-align: center;
-              padding: 5px 16px;
-              background: rgba(0,0,0,0.3);
-              border-radius: 4px;
-              border: 1px solid #4a4a4a;
-            ">"${result.feedback}"</div>
-
-            <!-- Stats -->
-            <div style="
-              margin-top: auto;
-              width: 100%;
-              font-size: 11px;
-              color: #888;
-              text-align: center;
-              line-height: 1.6;
-            ">
-              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 4px 0;">
-                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Closure</span>
-                <span style="color: #4ade80; font-weight: 600;">${result.metrics.closure}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 4px 0;">
-                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Sides</span>
-                <span style="color: #4ade80; font-weight: 600;">${result.metrics.sides}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 4px 0;">
-                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Angles</span>
-                <span style="color: #4ade80; font-weight: 600;">${result.metrics.angles}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-                <span style="text-transform: uppercase; letter-spacing: 0.1em; color: #666;">Straight</span>
-                <span style="color: #4ade80; font-weight: 600;">${result.metrics.straightness}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Branding -->
-          <div style="
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 8px;
-            letter-spacing: 0.2em;
-            color: rgba(168,168,168,0.4);
-            text-transform: uppercase;
-            z-index: 3;
-          ">Perfect Square</div>
-        </div>
-      `;
-
-      document.body.appendChild(tempDiv);
-
+      // The MemphisReportCard is already rendered in the DOM (hidden) with the styles.
       // Wait for styles and fonts to apply
       await new Promise(resolve => setTimeout(resolve, 300));
 
-      const canvas = await html2canvas(tempDiv, {
+      const canvas = await html2canvas(resultCardRef.current, {
         backgroundColor: null,
         scale: 3,
         useCORS: true,
       });
-
-      document.body.removeChild(tempDiv);
 
       const link = document.createElement("a");
       link.download = `perfect-square-${result.total}.png`;
@@ -492,14 +317,11 @@ export default function Game() {
         {/* Header */}
         <div className="flex justify-between items-start pointer-events-auto gap-2">
           <Button variant="ghost" onClick={() => setLocation("/")} className="w-14 h-14 !p-0 bg-black/40 border border-white/10 rounded-full hover:bg-black/60 backdrop-blur-sm">
-            <Home className="w-10 h-10 text-emerald-500" />
+            <Home className="w-13 h-13 text-emerald-500" />
             <span className="hidden sm:inline">Home</span>
           </Button>
 
-          <div className="text-right">
-            <h2 className="text-muted-foreground text-[10px] sm:text-xs font-mono uppercase tracking-widest">
-              Target
-            </h2>
+          <div className="text-right pt-5">
             <p className="font-display text-lg sm:text-xl text-primary">Perfect Square</p>
           </div>
         </div>
@@ -518,80 +340,23 @@ export default function Game() {
           </motion.div>
         )}
 
-        {/* Hidden Report Card for Download - Same as visible cyber card but without buttons */}
+        {/* Hidden Report Card for Download */}
         {result && (
           <div
-            ref={resultCardRef}
             style={{
               position: 'fixed',
               left: '-9999px',
               top: '-9999px',
-              width: '320px',
-              height: '420px',
               opacity: 0,
             }}
           >
-            <div className="cyber-card" style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <div className="cyber-card-content">
-                <div className="cyber-card-glare"></div>
-                <div className="cyber-lines">
-                  <span></span><span></span><span></span><span></span>
-                </div>
-
-                {/* Score Section */}
-                <div className="cyber-score-title">Total Score</div>
-                <div className="cyber-score-value">{result.total}</div>
-
-                {/* Feedback */}
-                <p className="cyber-feedback">"{result.feedback}"</p>
-
-                {/* Metrics */}
-                <div className="cyber-metrics">
-                  <div className="cyber-metric">
-                    <div className="cyber-metric-label">Closure</div>
-                    <div className="cyber-metric-value">{result.metrics.closure}</div>
-                  </div>
-                  <div className="cyber-metric">
-                    <div className="cyber-metric-label">Sides</div>
-                    <div className="cyber-metric-value">{result.metrics.sides}</div>
-                  </div>
-                  <div className="cyber-metric">
-                    <div className="cyber-metric-label">Angles</div>
-                    <div className="cyber-metric-value">{result.metrics.angles}</div>
-                  </div>
-                  <div className="cyber-metric">
-                    <div className="cyber-metric-label">Straight</div>
-                    <div className="cyber-metric-value">{result.metrics.straightness}</div>
-                  </div>
-                </div>
-
-                {/* Footer instead of buttons */}
-                <div style={{
-                  textAlign: 'center',
-                  color: 'rgba(255,255,255,0.4)',
-                  fontSize: '10px',
-                  fontFamily: 'monospace',
-                  marginTop: 'auto',
-                  letterSpacing: '1px'
-                }}>
-                  perfect Square
-                </div>
-
-                {/* Decorative Elements */}
-                <div className="cyber-glowing-elements">
-                  <div className="cyber-glow-1"></div>
-                  <div className="cyber-glow-2"></div>
-                  <div className="cyber-glow-3"></div>
-                </div>
-                <div className="cyber-corner-elements">
-                  <span></span><span></span><span></span><span></span>
-                </div>
-              </div>
+            <div ref={resultCardRef}>
+              <MemphisReportCard result={result} />
             </div>
           </div>
         )}
 
-        {/* Results Panel - Witcher Card Modal */}
+        {/* Results Panel - Modal */}
         <AnimatePresence>
           {result && (
             <motion.div
@@ -600,64 +365,13 @@ export default function Game() {
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 pointer-events-auto"
             >
-              <div className="witcher-card relative">
-                {/* Corners */}
-                <div className="witcher-corner wc-tl"></div>
-                <div className="witcher-corner wc-tr"></div>
-                <div className="witcher-corner wc-bl"></div>
-                <div className="witcher-corner wc-br"></div>
-
-                {/* Title */}
-                <div className="text-[#cba874] text-xs tracking-[0.2em] border-b border-[#4a4a4a] pb-2 w-full text-center mb-6 font-serif">
-                  PERFECT SQUARE
-                </div>
-
-                {/* Score */}
-                <div className="relative w-24 h-24 flex items-center justify-center mb-2">
-                  <div className="absolute inset-0 border-2 border-[#cba874] rounded-full opacity-50"></div>
-                  <div className="absolute inset-2 border border-[#4a4a4a] rounded-full"></div>
-                  <span className="text-5xl font-bold text-white z-10 drop-shadow-[0_0_15px_#cba874]">
-                    {result.total}
-                  </span>
-                </div>
-
-                {/* Feedback */}
-                <div className="text-[#a8a8a8] text-xs italic border border-[#4a4a4a] px-3 py-1 rounded bg-black/30 mb-auto text-center">
-                  "{result.feedback}"
-                </div>
-
-                {/* Stats */}
-                <div className="w-full text-[10px] text-gray-500 mt-4 space-y-1">
-                  <div className="flex justify-between border-b border-[#333] pb-1">
-                    <span>CLOSURE</span> <span className="text-emerald-500 font-bold">{result.metrics.closure}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-[#333] pb-1">
-                    <span>SIDES</span> <span className="text-emerald-500 font-bold">{result.metrics.sides}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-[#333] pb-1">
-                    <span>ANGLES</span> <span className="text-emerald-500 font-bold">{result.metrics.angles}</span>
-                  </div>
-                  <div className="flex justify-between pt-1">
-                    <span>STRAIGHT</span> <span className="text-emerald-500 font-bold">{result.metrics.straightness}</span>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-2 w-full mt-4">
-                  <button
-                    onClick={resetGame}
-                    className="flex-1 py-2 bg-[#10b981] text-black text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 hover:brightness-110 active:scale-95 transition-all"
-                  >
-                    <RotateCcw className="w-3 h-3" /> AGAIN
-                  </button>
-                  <button
-                    onClick={downloadReportCard}
-                    className="flex-1 py-2 border border-[#10b981] text-[#10b981] text-[10px] font-bold uppercase tracking-wider rounded flex items-center justify-center gap-1 hover:bg-[#10b981]/10 active:scale-95 transition-all"
-                  >
-                    <Download className="w-3 h-3" /> SAVE
-                  </button>
-                </div>
-              </div>
+              <MemphisReportCard
+                result={result}
+                onAgain={resetGame}
+                onSave={downloadReportCard}
+                onClose={resetGame}
+                onMint={() => alert("Mint feature coming soon!")}
+              />
             </motion.div>
           )}
         </AnimatePresence>
